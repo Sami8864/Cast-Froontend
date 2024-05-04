@@ -1,0 +1,64 @@
+
+      
+variables:
+  DOCKER_IMAGE_PRODUCTION : $CI_REGISTRY_IMAGE 
+  DOCKER_IMAGE_TEST       : $CI_REGISTRY_IMAGE 
+  DOCKER_IMAGE_DEV        : $CI_REGISTRY_IMAGE
+
+stages :
+  - push_registry_dev
+  - update_manifests_dev
+
+  
+build_image_dev:
+  stage: push_registry_dev
+  image : docker:24.0.6
+  services:
+    - docker:24.0.6-dind
+  variables: 
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+  script:
+   
+    - docker build  -f dev.Dockerfile --tag $DOCKER_IMAGE_TEST:$CI_COMMIT_SHORT_SHA-dev .
+    - docker push $DOCKER_IMAGE_TEST:$CI_COMMIT_SHORT_SHA-dev
+
+  only:
+    - develop  
+  tags :
+    - gitlab-org-docker
+ 
+
+
+update_manifest_dev:
+  stage: update_manifests_dev
+  variables:
+    GIT_STRATEGY: none
+  retry: 2
+  image: docker:24.0.6
+  services:
+    - docker:24.0.6-dind
+  script:
+    # Add SSH key to root
+    - mkdir -p /root/.ssh
+    - cat "${GIT_SSH}" > /root/.ssh/id_rsa
+    - ssh-keyscan -H gitlab.com > /root/.ssh/known_hosts
+    - chmod 400 /root/.ssh/id_rsa
+    - apk add --no-cache git 
+    - export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa"
+    - git config --global user.name "hatemBT"
+    - git config --global user.email "hatemtayeb2@gmail.com"
+    - git clone --single-branch --branch main git@gitlab.com:MbakopLLC/k8s-manifests.git
+    - cd k8s-manifests/development/casttypes-v2/frontend-admin
+    - export REPO=$DOCKER_IMAGE_DEV:$CI_COMMIT_SHORT_SHA-dev
+    - chmod -R 777 ${PWD}
+    - docker run --rm -v ${PWD}:/workdir -e REPO=$REPO mikefarah/yq:4.12.2  e '.spec.template.spec.containers[0].image=env(REPO)' --inplace deployment.yml
+    - git commit -am "New version updated ${CI_COMMIT_SHORT_SHA}-dev" && git push origin main
+  tags: 
+    - gitlab-org-docker
+  only:
+    refs:
+    - develop

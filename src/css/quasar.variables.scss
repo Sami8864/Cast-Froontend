@@ -1,0 +1,160 @@
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+// app global css in SCSS form
+// @import url('https://fonts.googleapis.com/css2?family=Averia+Libre:ital,wght@0,300;1,700&family=Jost:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Averia+Libre:ital,wght@0,300;1,700&family=Jost:wght@500&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+$primary   : #1976D2;
+$secondary : #4BC270;
+$accent    : #9C27B0;
+$light: #ffffff;
+$dark      : #1E293B;
+$dark-page : #121212;
+$paper: #f4f4f4;
+$positive  : #21BA45;
+$negative  : #C10015;
+$info      : #31CCEC;
+$warning   : #F2C037;
+$local-blue : #1e6ea9;
+$brandBlue : #255d8e;
+$local-green : #c1ddce;
+$lihgt-white: #F1F5F9;
+$dark-black : #101010;
+$sea_green : #4BC270;
+$dark_grey : #64748B;
+body{
+    font-family: "Roboto", sans-serif;
+}
+.text-light_white{
+    color: $lihgt-white;
+}
+.text-dar-grey{
+    color: $dark_grey;
+}
+
+.text-light {
+    color: $light;
+}
+.text-dark
+{
+    color:$dark ;
+}
+.bg-dark{
+    background-color: $dark-page;
+}
+.bg-light {
+    background-color: $light;
+}
+.text-local-blue {
+    color: $local-blue;
+}
+.bg-local-blue {
+    background-color: $local-blue;
+}
+.bg-dark{
+    background-color: $dark-black;
+}
+.text-brandBlue {
+    color: $brandBlue;
+}
+.bg-brandBlue {
+    background-color: $brandBlue;
+}
+.text-local-green {
+    color: $local-green;
+}
+.bg-local-green {
+    background-color: $local-green;
+}
+.text-paper {
+    color: $paper;
+}
+.bg-paper {
+    background-color: $paper;
+}
+.d-block {
+    display: block;
+}
+.flat-button {
+    :deep(.q-focus-helper) {
+        display: none !important;
+    }
+}
+.min-h-100 {
+    min-height: 100vh;
+}
+
+.scrollable{
+    max-width: 100vh;
+    overflow: auto;
+}
+@for $spacing from 0 through 96 {
+    .pa-#{$spacing} {
+        padding: #{$spacing}px;
+    }
+    .px-#{$spacing} {
+        padding-left: #{$spacing}px;
+        padding-right: #{$spacing}px;
+    }
+
+    .py-#{$spacing} {
+        padding-top: #{$spacing}px;
+        padding-bottom: #{$spacing}px;
+    }
+
+    .pt-#{$spacing} {
+        padding-top: #{$spacing}px;
+    }
+
+    .pb-#{$spacing} {
+        padding-bottom: #{$spacing}px;
+    }
+
+    .pl-#{$spacing} {
+        padding-left: #{$spacing}px;
+    }
+
+    .pr-#{$spacing} {
+        padding-right: #{$spacing}px;
+    }
+
+    .ma-#{$spacing} {
+        margin: #{$spacing}px;
+    }
+
+    .mx-#{$spacing} {
+        margin-left: #{$spacing}px;
+        margin-right: #{$spacing}px;
+    }
+
+    .my-#{$spacing} {
+        margin-top: #{$spacing}px;
+        margin-bottom: #{$spacing}px;
+    }
+
+    .mt-#{$spacing} {
+        margin-top: #{$spacing}px;
+    }
+
+    .mb-#{$spacing} {
+        margin-bottom: #{$spacing}px;
+    }
+
+    .ml-#{$spacing} {
+        margin-left: #{$spacing}px;
+    }
+
+    .mr-#{$spacing} {
+        margin-right: #{$spacing}px;
+    }
+}
